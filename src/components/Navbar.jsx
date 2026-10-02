@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/asset.js';
+import LazyImage from '../components/LazyImage';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,11 +29,11 @@ const Navbar = () => {
     >
       <div className="flex items-center gap-10">
         <Link to="/">
-          <img 
-            src={assets.logo} 
-            alt="B1G Logo" 
-            className="h-10 md:h-11 cursor-pointer transition-transform duration-300 hover:scale-105 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]" 
-          />
+        <LazyImage
+          src={assets.logo}
+          alt="B1G Logo"
+          className="h-10 md:h-11 cursor-pointer transition-transform duration-300 hover:scale-105 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]"
+        />
         </Link>
         
         {/* Hidden on mobile, flex on lg and above */}

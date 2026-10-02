@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, MonitorPlay, Zap, ShieldCheck } from 'lucide-react';
 import { assets } from '../assets/asset.js';
+import LazyImage from '../components/LazyImage';
 
 const FreeTrial = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ const FreeTrial = () => {
           {/* Main Content Image */}
           <div className="w-full mb-10 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(200,16,46,0.15)] border border-white/10 group relative">
             <div className="absolute inset-0 bg-gradient-to-t from-[#080d1d]/80 via-transparent to-transparent z-10"></div>
-            <img 
+            <LazyImage 
               src={assets.freeTrialBanner} 
               alt="Premium IPTV Streaming" 
               className="w-full object-cover aspect-video transform transition-transform duration-700 group-hover:scale-105" 

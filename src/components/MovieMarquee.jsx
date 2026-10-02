@@ -1,4 +1,5 @@
 import React from 'react';
+import LazyImage from './LazyImage';
 
 const row1 = [
   'https://static.tvmaze.com/uploads/images/original_untouched/610/1525272.jpg',
