@@ -9,10 +9,12 @@ import Contact from './pages/Contact';
 import Blogs from './pages/Blogs';
 import Faqs from './pages/Faqs';
 import Pricing from './pages/Pricing';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
