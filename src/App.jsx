@@ -7,6 +7,7 @@ import FreeTrial from './pages/FreeTrial';
 import InstallationGuide from './pages/InstallationGuide';
 import Contact from './pages/Contact';
 import Blogs from './pages/Blogs';
+import BlogDetail from './pages/BlogDetail';
 import Faqs from './pages/Faqs';
 import Pricing from './pages/Pricing';
 import ScrollToTop from './components/ScrollToTop';
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="installation-guide" element={<InstallationGuide />} />
           <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs/:slug" element={<BlogDetail />} />
           <Route path="faqs" element={<Faqs />} />
         </Route>
       </Routes>
