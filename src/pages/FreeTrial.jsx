@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { Mail, MonitorPlay, Zap, ShieldCheck } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Mail, MonitorPlay, Zap, ShieldCheck, CheckCircle2, Sparkles } from 'lucide-react';
 import { assets } from '../assets/asset.js';
 import LazyImage from '../components/LazyImage';
 
 const FreeTrial = () => {
+  const [searchParams] = useSearchParams();
+  const selectedPlan = searchParams.get('plan');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     device: 'smart-tv',
-    app: ''
+    app: '',
+    plan: selectedPlan || '24-Hour Free Trial'
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Form submission logic goes here (e.g., API call or WhatsApp redirect)
-    alert("Free trial request sent successfully! Please check your email or WhatsApp in a few minutes.");
+    setSubmitted(true);
   };
 
   return (
@@ -102,70 +107,103 @@ const FreeTrial = () => {
 
           <h3 className="text-xl md:text-2xl font-bold text-white mb-6 relative z-10">Request Trial Details</h3>
           
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5 relative z-10">
-            <div>
-              <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Your Full Name</label>
-              <input 
-                type="text" 
-                required
-                placeholder="John Doe"
-                className="w-full bg-[#181818] border border-white/10 rounded-md px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
-                onChange={e => setFormData({...formData, name: e.target.value})}
-              />
-            </div>
-            
-            <div>
-              <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Email Address (For Delivery)</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                <input 
-                  type="email" 
-                  required
-                  placeholder="john@example.com"
-                  className="w-full bg-[#181818] border border-white/10 rounded-md pl-11 pr-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
-                  onChange={e => setFormData({...formData, email: e.target.value})}
-                />
+          {selectedPlan && (
+            <div className="mb-5 p-3 rounded-lg bg-[#c8102e]/10 border border-[#c8102e]/30 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#c8102e]" />
+                <span className="text-xs text-gray-300">
+                  Target Plan: <strong className="text-white">{selectedPlan}</strong>
+                </span>
               </div>
+              <span className="text-[10px] uppercase font-bold text-[#c8102e] bg-[#c8102e]/15 px-2 py-0.5 rounded border border-[#c8102e]/20">
+                Free Test Line
+              </span>
             </div>
+          )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {submitted ? (
+            <div className="relative z-10 text-center py-8 px-2">
+              <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
+              <h4 className="text-lg md:text-xl font-bold text-white mb-2">Free Trial Request Sent!</h4>
+              <p className="text-gray-300 text-xs sm:text-sm max-w-md mx-auto mb-5 leading-relaxed">
+                Thank you, <strong className="text-white">{formData.name}</strong>. Your 24-hour test credentials{selectedPlan ? ` for the ${selectedPlan} plan` : ''} are being generated and will be sent to <span className="text-[#c8102e] font-semibold">{formData.email}</span> within 5–15 minutes.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSubmitted(false)}
+                className="text-xs text-gray-400 hover:text-white underline cursor-pointer"
+              >
+                Submit another trial request
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 relative z-10">
               <div>
-                <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Your Device</label>
-                <select 
+                <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Your Full Name</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="John Doe"
                   className="w-full bg-[#181818] border border-white/10 rounded-md px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
-                  onChange={e => setFormData({...formData, device: e.target.value})}
-                >
-                  <option value="smart-tv">Smart TV (Samsung/LG)</option>
-                  <option value="firestick">Amazon Firestick</option>
-                  <option value="pc">PC / Mac / Browser</option>
-                  <option value="smartphone">Smartphone / Tablet</option>
-                  <option value="mag">MAG Box</option>
-                  <option value="other">Other Device</option>
-                </select>
+                  onChange={e => setFormData({...formData, name: e.target.value})}
+                />
               </div>
               
               <div>
-                <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Preferred App (Optional)</label>
-                <input 
-                  type="text" 
-                  placeholder="e.g., Tivimate, Smarters"
-                  className="w-full bg-[#181818] border border-white/10 rounded-md px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
-                  onChange={e => setFormData({...formData, app: e.target.value})}
-                />
+                <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Email Address (For Delivery)</label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <input 
+                    type="email" 
+                    required
+                    placeholder="john@example.com"
+                    className="w-full bg-[#181818] border border-white/10 rounded-md pl-11 pr-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
+                    onChange={e => setFormData({...formData, email: e.target.value})}
+                  />
+                </div>
               </div>
-            </div>
 
-            <button 
-              type="submit"
-              className="w-full bg-[#c8102e] text-white py-3.5 rounded-md font-bold text-sm tracking-wider hover:bg-[#a00c24] transition-colors mt-4 shadow-lg shadow-[#c8102e]/20 uppercase"
-            >
-              Get Free Trial Now
-            </button>
-            
-            <p className="text-gray-500 text-[11px] text-center mt-2">
-              By requesting a trial, you agree that you are testing the service for personal use. No credit card required.
-            </p>
-          </form>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Your Device</label>
+                  <select 
+                    className="w-full bg-[#181818] border border-white/10 rounded-md px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
+                    onChange={e => setFormData({...formData, device: e.target.value})}
+                  >
+                    <option value="smart-tv">Smart TV (Samsung/LG)</option>
+                    <option value="firestick">Amazon Firestick</option>
+                    <option value="pc">PC / Mac / Browser</option>
+                    <option value="smartphone">Smartphone / Tablet</option>
+                    <option value="mag">MAG Box</option>
+                    <option value="other">Other Device</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-gray-400 text-[10px] sm:text-xs font-semibold mb-2 uppercase tracking-widest">Preferred App (Optional)</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g., Tivimate, Smarters"
+                    className="w-full bg-[#181818] border border-white/10 rounded-md px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8102e] transition-colors"
+                    onChange={e => setFormData({...formData, app: e.target.value})}
+                  />
+                </div>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full bg-[#c8102e] text-white py-3.5 rounded-md font-bold text-sm tracking-wider hover:bg-[#a00c24] transition-colors mt-4 shadow-lg shadow-[#c8102e]/20 uppercase cursor-pointer"
+              >
+                {selectedPlan ? `Get Free Trial For ${selectedPlan}` : 'Get Free Trial Now'}
+              </button>
+              
+              <p className="text-gray-500 text-[11px] text-center mt-2">
+                By requesting a trial, you agree that you are testing the service for personal use. No credit card required.
+              </p>
+            </form>
+          )}
         </div>
 
       </div>

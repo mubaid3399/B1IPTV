@@ -6,6 +6,7 @@ import PricingSection from '../components/PricingSection';
 import LiveSportsSection from '../components/LiveSportsSection';
 import MoviesShowsSection from '../components/MoviesShowsSection';
 import MovieMarquee from '../components/MovieMarquee';
+import SeoArticle from '../components/SeoArticle';
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <LiveSportsSection />
       <MoviesShowsSection />
       <MovieMarquee />
+      <SeoArticle />
     </div>
   );
 };

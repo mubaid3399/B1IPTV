@@ -31,7 +31,7 @@ const PricingCard = ({ title, price, features, isPopular }) => {
       
       <div className="flex justify-center mt-auto">
         <Link 
-          to="/contact" 
+          to={title ? `/free-trial?plan=${encodeURIComponent(title)}` : '/free-trial'} 
           className="bg-[#c8102e] text-white px-6 py-2 rounded-md text-xs md:text-sm font-medium transition-colors hover:bg-[#a00c24]"
         >
           Buy Now
